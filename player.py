@@ -27,3 +27,10 @@ class Player:
                 self.sprite = pyglet.sprite.Sprite(self.imag, compute_position(self.x, self.y)[0], compute_position(self.x, self.y)[1], batch=can[2])
                 self.sprite.scale = (size_real / size)
                 self.sprite.rotation = rotation[di]
+    
+    def explode(self, batch):
+        self.imag = pyglet.resource.image(os.path.join("graphics", "Dead1.png"))
+        self.imag.anchor_x, self.imag.anchor_y = self.imag.width // 2, self.imag.height // 2
+        self.sprite = pyglet.sprite.Sprite(self.imag, compute_position(self.x, self.y)[0], compute_position(self.x, self.y)[1], batch=batch)
+        self.sprite.scale = (size_real / size)
+        return (self.x, self.y)

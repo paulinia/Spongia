@@ -14,6 +14,7 @@ window.set_mouse_visible(True)
 class GameState:
     def __init__(self):
         self.current_level = 1
+        self.exploded = False
         self.level = levels.Level(self.current_level)
         
     def draw(self):
@@ -23,7 +24,12 @@ class GameState:
         return "GAME"
     
     def key_press(self, key):
-        self.level.step(key)
+        if self.exploded:
+            return "GAME"
+        res = self.level.step(key)
+        if res != None:
+            print("Tvoj vysledok je {}".format(res))
+            self.exploded = True
         return "GAME"
 
 states = {"GAME" : GameState()}

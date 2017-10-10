@@ -12,6 +12,7 @@ class Level:
         # not editor yet
         self.level_id = level_id
         self.n = 10
+        self.distance = 3
         self.static_batch = pyglet.graphics.Batch()
         self.entities_batch = pyglet.graphics.Batch()
         self.blockes_batch = pyglet.graphics.Batch()
@@ -35,7 +36,12 @@ class Level:
         self.entities_batch.draw()
         
     def step(self, key):
-        self.player.step(D[key], self)
+        if key in D.keys():
+            self.player.step(D[key], self)
+            for person in self.characters:
+                person.move(self)
+        else:
+            return self.explosion()
     
     def can_move(self, position_new, di):
         dx, dy = di
@@ -61,3 +67,12 @@ class Level:
         if self.mapa[ny][nx] == 0 or self.mapa[ny][nx] == 3:
             return True
         return False
+    
+    def explosion(self):
+        x, y = self.player.explode(self.entities_batch)
+        cnt = 0
+        for person in self.characters:
+            if abs(x - person.x) + abs(y - person.y) <= self.distance:
+                person.die(self.entities_batch)
+                cnt += 1
+        return cnt
