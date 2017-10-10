@@ -4,6 +4,7 @@ import camera
 import static
 import player
 import random
+import characters
 
 
 class Level:
@@ -24,6 +25,9 @@ class Level:
                 if self.mapa[i][j] == 1:
                     self.blockers[(j, i)] = (static.Blocker(j * size_real, i * size_real, self.blockes_batch, "TNT"))
         self.player = player.Player(random.randint(0, self.n - 1), random.randint(0, self.n - 1), self.entities_batch)
+        self.characters = []
+        for i in range(random.randint(2, 10)):
+            self.characters.append(characters.Person("Man1", random.randint(0, self.n - 1), random.randint(0, self.n - 1), self.entities_batch))
         
     def draw(self):
         self.static_batch.draw()
@@ -51,3 +55,9 @@ class Level:
             else:
                 return (False, "")
         return (True, "")
+    
+    def blocked(self, position_new):
+        nx, ny = position_new
+        if self.mapa[ny][nx] == 0 or self.mapa[ny][nx] == 3:
+            return True
+        return False

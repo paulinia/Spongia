@@ -14,6 +14,8 @@ D = {pyglet.window.key.S : (0, -1),
      pyglet.window.key.A : (-1, 0),
      pyglet.window.key.D : (1, 0)}
 
+DR = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+
 rotation = {(0, -1) : 180,
             (0, 1) : 0,
             (-1, 0) : 270,
