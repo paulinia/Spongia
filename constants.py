@@ -4,8 +4,8 @@ import os
 FPS = 60
 STEP = 1 / 50
 size = 60
-size_real = 100
-N = 10
+size_real = 80
+N = 12
 height = N * size_real
 width = N * size_real
 

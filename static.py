@@ -15,7 +15,6 @@ class Wall:
         self.tile_imag.anchor_y = 0
         self.sprite = pyglet.sprite.Sprite(self.tile_imag, x = x, y = y, usage = 'static', batch = batch)
         self.sprite.scale = (size_real / size)
-        
     
 class Clothing:
     def __init__(self, x, y, batch, material="TNT"):
