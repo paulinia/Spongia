@@ -55,7 +55,7 @@ class Person:
                 #return None
         else:
             self.x += self.movement[self.direction][0]
-            self.y += self.movement[self.direction][1]d
+            self.y += self.movement[self.direction][1]
             x, y = compute_position(self.x, self.y)
             self.sprite.set_position(x, y)
         self.sprite.rotation = rotation[self.movement[self.direction]]

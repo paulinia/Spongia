@@ -12,10 +12,26 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 window.set_mouse_visible(True)
 pyglet.font.add_file('Cardinal.ttf')
 action_man = pyglet.font.load('Cardinal')
+speaker = pyglet.media.Player()
+effects = pyglet.media.Player()
+effects.queue(explosion)
+looper = pyglet.media.SourceGroup(explosion.audio_format, None)
+looper.loop = True
+looper.queue(audio_levels["MENU"])
+speaker.queue(looper)
+speaker.play()
+
+last = 0
+
+with open("last", "r") as fi:
+    last = int(fi.read())
+    
+print(last)
+
 
 class GameState:
     def __init__(self):
-        self.current_level = 6
+        self.current_level = last + 1
         self.max_level = 8
         self.exploded = False
         self.level = levels.Level(self.current_level)
@@ -35,13 +51,25 @@ class GameState:
         
     def key_press(self, key):
         if not key in pressed or key == pyglet.window.key.ESCAPE:
+            loop = pyglet.media.SourceGroup(audio_levels["MENU"].audio_format, None)
+            loop.loop = True
+            loop.queue(audio_levels["MENU"])
+            speaker.queue(loop)
+            speaker.next_source()
             return "MENU"
         res = self.level.step(key)
         print("res {}, key je {}".format(res, key))
         if res != None:
             print("Tvoj vysledok je {}".format(res))
             self.exploded = True
+            effects.queue(explosion)
+            effects.play()
             states["WIN"].set_score(res)
+            loop = pyglet.media.SourceGroup(audio_levels["WIN"].audio_format, None)
+            loop.loop = True
+            loop.queue(audio_levels["WIN"])
+            speaker.queue(loop)
+            speaker.next_source()
             return "WIN"
         return "GAME"
     
@@ -80,6 +108,11 @@ class WinState:
     
     def key_press(self, key):
         states["TALE"].set_level_score(states["GAME"].current_level, self.score)
+        loop = pyglet.media.SourceGroup(audio_levels["TALE"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["TALE"])
+        speaker.queue(loop)
+        speaker.next_source()
         return "TALE"
     
     def draw(self):
@@ -101,7 +134,7 @@ class MenuState:
                       pyglet.text.Label("Replay Level", font_name = 'Cardinal', font_size = 40, anchor_x = 'center', anchor_y = 'center', x = width // 2 + 30, y = height - 570),
                       pyglet.text.Label("Resume Game", font_name = 'Cardinal', font_size = 40, anchor_x = 'center', anchor_y = 'center', x = width // 2 + 30, y = height - 370),
                       pyglet.text.Label("New Game", font_name = 'Cardinal', font_size = 40, anchor_x = 'center', anchor_y = 'center', x = width // 2 + 30, y = height - 170)]
-        self.actions = [pyglet.app.exit, self.replay_level, self.resume, self.new_game]
+        self.actions = [self.save, self.replay_level, self.resume, self.new_game]
         self.actions = list(reversed(self.actions))
         
     def update(self, dt):
@@ -128,20 +161,40 @@ class MenuState:
             text.draw()
             
     def resume(self):
+        loop = pyglet.media.SourceGroup(audio_levels["GAME"].audio_format if states["GAME"].current_level != 8 else audio_format["LAST"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["MENU"] if states["GAME"].current_level != 8 else audio_format["LAST"])
+        speaker.queue(loop)
+        speaker.next_source()
         return "GAME"
     
     def replay_level(self):
         states["GAME"].replay_level()
+        loop = pyglet.media.SourceGroup(audio_levels["GAME"].audio_format if states["GAME"].current_level != 8 else audio_format["LAST"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["GAME"] if states["GAME"].current_level != 8 else audio_format["LAST"])
+        speaker.queue(loop)
+        speaker.next_source()
         return "GAME"
         
     def new_game(self):
         states["GAME"].new_game()
         states["TALE"].set_level_score(0, 3)
+        loop = pyglet.media.SourceGroup(audio_levels["TALE"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["TALE"])
+        speaker.queue(loop)
+        speaker.next_source()
         return "TALE"
+    def save(self):
+        print("last {}".format(states["GAME"].current_level))
+        with open("last", "w") as fi:
+            fi.write(str(states["GAME"].current_level - 1))
+        pyglet.app.exit()
 
 class TaleState:
     def __init__(self):
-        self.level = 0
+        self.level = last
         self.score = 3
         self.scene = pyglet.sprite.Sprite(pyglet.resource.image(os.path.join("graphics", "scene1.png")), x = 0, y = 0)
         texts = [("Ahma'Treta'ji bud na teba milostivá. Aghe chcú si ovládat svet, kým my sme spali. Musíme získat spät našu vládu a našu rísu. Je to na tebe, azma'Amaz'haja. Nech Ahma'Treta'ji sprevádza tvoje posledné kroky na tejto znesvätenej zemi a zober zo sebou, tých čo znesvätili, tolko kolko môzes. Ó Ahma'Treta'ji, nech bdie nad tebou. ASDW uzívaj na hýbanie a enterom finálnym odpál sa do nebies. Lez pamätaj tolko, musíš kamuflovat sa, k farebnému rovnakým odevom.", "Nech Ahma'Treta'ji príjme moju obetu, ahma'Amaz'keu"),
@@ -182,6 +235,11 @@ class TaleState:
             states["GAME"].next_level()
         else:
             states["GAME"].replay_level()
+        loop = pyglet.media.SourceGroup(audio_levels["GAME"].audio_format if states["GAME"].current_level != 8 else audio_format["LAST"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["GAME"] if states["GAME"].current_level != 8 else audio_format["LAST"])
+        speaker.queue(loop)
+        speaker.next_source()
         return "GAME"
     
     def draw(self):
@@ -206,6 +264,8 @@ states = {"GAME" : GameState(),
 
 current = "MENU"
 
+
+
 @window.event
 def on_draw():
     global current
@@ -217,6 +277,11 @@ def on_key_press(symbol, modifiers):
     global current
     print("key he {} a current {}".format(symbol, current))
     if symbol == pyglet.window.key.ESCAPE:
+        loop = pyglet.media.SourceGroup(audio_levels["MENU"].audio_format, None)
+        loop.loop = True
+        loop.queue(audio_levels["MENU"])
+        speaker.queue(loop)
+        speaker.next_source()
         current = "MENU"
         return pyglet.event.EVENT_HANDLED
     if not symbol in pressed.keys():

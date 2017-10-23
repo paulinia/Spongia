@@ -1,0 +1,25 @@
+missing module named 'org.python' - imported by pickle, /home/paulinia/Desktop/Programy/Spongia/main.py, xml.sax
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _winreg - imported by platform, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named 'java.lang' - imported by platform, /home/paulinia/Desktop/Programy/Spongia/main.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named winreg - imported by platform, mimetypes, urllib.request, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _sha1 - imported by hashlib, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _md5 - imported by hashlib, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _sha256 - imported by hashlib, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _sha512 - imported by hashlib, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named nt - imported by os, ntpath, shutil, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named ce - imported by os, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named msvcrt - imported by subprocess, pyglet.extlibs.png, getpass, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _winapi - imported by subprocess, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named _dummy_threading - imported by dummy_threading, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named org - imported by copy, /home/paulinia/Desktop/Programy/Spongia/main.py
+missing module named cpngfilters - imported by pyglet.extlibs.png
+missing module named PIL - imported by pyglet.image.codecs.pil
+missing module named Image - imported by pyglet.image.codecs.pil
+missing module named pyglet.window.BaseWindow - imported by pyglet.window, pyglet.window.carbon, pyglet.window.cocoa, pyglet.window.win32, pyglet.window.xlib
+missing module named MacOS - imported by pyglet.canvas.carbon
+missing module named macresource - imported by MacOS
