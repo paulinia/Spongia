@@ -1,0 +1,10 @@
+Názov tímu: paulinia
+Názov hry: Vzostup Amaz'hán
+Vývojové prostredie a prostriedky: Python & Pyglet
+
+Obrázky:
+moja výroba :) (softzver Krita)
+
+Hudba:
+Všetko okrem explosion.wav - http://www.purple-planet.com/home/4593438321
+explosion.wav - http://www.freesfx.co.uk/
