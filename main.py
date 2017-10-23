@@ -3,7 +3,7 @@ import camera
 import levels
 from pyglet.gl import *
 
-window = pyglet.window.Window(caption = "The rise of Amaz'hanas",
+window = pyglet.window.Window(caption = "Vzostup Amaz'hán",
                               width = width,
                               height = height)
 
@@ -308,7 +308,7 @@ def update(dt):
     while accum >= STEP:
         current = states[current].update(STEP)
         accum -= STEP
-    window.set_caption("The Rise of Amaz'hanas [" + str(int(1 / dt)) + "]")
+    window.set_caption("Vzostup Amaz'hán [" + str(int(1 / dt)) + "]")
 
 pyglet.clock.schedule_interval(update, 1 / FPS)
 

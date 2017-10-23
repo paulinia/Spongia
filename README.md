@@ -10,6 +10,10 @@ Python býva na Linuxoch defaultne a pyglet sa potom dorobí ako:
 
 sudo pip3 install pyglet
 
+a následne sa ha spustí ako:
+
+python3 main.py
+
 Na celú hru sú klávesy ASDW, Enter a Esc.
 
 ### Poznámka
